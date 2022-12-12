@@ -9,6 +9,10 @@ router.get('/', async (req, res) => {
     res.send( await Books.findAll());
 })
 // POST
+router.post('/', async (req, res) => {
+    await Books.create(req.body);
+    res.json( await Books.findAll() );
+})
 // PUT
 router.put('/:id', async (req, res) => {
     // modify one record in the db
@@ -19,5 +23,13 @@ router.put('/:id', async (req, res) => {
     res.json( await Books.findAll() );
 });
 // DELETE
+router.delete('/:id', async (req, res) => {
+    await Books.destroy({
+        where: {
+            id: req.params.id
+        }
+    });
+    res.json( await Books.findAll() );
+})
 
 module.exports = router;
